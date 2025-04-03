@@ -8,6 +8,7 @@ import pages.LoginPage;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Тесты страницы входа")
 public class LoginPageTest {
@@ -27,8 +28,10 @@ public class LoginPageTest {
     @Test
     @DisplayName("Поля логина и пароля отображаются")
     void fieldsVisibleTest() {
-        loginPage.getEmailField().shouldBe(visible.because("Не отображается поле ввода логина"));
-        loginPage.getPasswordField().shouldBe(visible.because("Не отображается поле ввода пароля"));
+        assertAll("Проверка отображения полей логина и пароля",
+                () -> loginPage.getEmailField().shouldBe(visible.because("Не отображается поле ввода логина")),
+                () -> loginPage.getPasswordField().shouldBe(visible.because("Не отображается поле ввода пароля"))
+        );
     }
 
     @Nested
