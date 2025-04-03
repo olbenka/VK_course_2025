@@ -7,7 +7,6 @@ import pages.LoginPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class LoginPageTest {
 
@@ -17,7 +16,7 @@ public class LoginPageTest {
     }
 
     @Test
-    void fieldsVisible() {
+    void fieldsVisibleTest() {
         LoginPage loginPage = new LoginPage();
 
         loginPage.openPage();
@@ -27,7 +26,7 @@ public class LoginPageTest {
     }
 
     @Test
-    void invalidLogin() {
+    void invalidLoginTest() {
         LoginPage loginPage = new LoginPage();
 
         loginPage.openPage()
@@ -41,7 +40,7 @@ public class LoginPageTest {
     }
 
     @Test
-    void emptyFields() {
+    void emptyFieldsTest() {
         LoginPage loginPage = new LoginPage();
 
         loginPage.openPage()
@@ -53,7 +52,7 @@ public class LoginPageTest {
     }
 
     @Test
-    void emptyFieldPassword() {
+    void emptyFieldPasswordTest() {
         LoginPage loginPage = new LoginPage();
 
         loginPage.openPage()
