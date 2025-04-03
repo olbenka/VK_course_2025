@@ -10,7 +10,6 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class LoginPageTest {
-    LoginPage loginPage = new LoginPage();
 
     @BeforeAll
     static void setUp() {
@@ -19,6 +18,8 @@ public class LoginPageTest {
 
     @Test
     void fieldsVisible() {
+        LoginPage loginPage = new LoginPage();
+
         loginPage.openPage();
 
         loginPage.getEmailField().shouldBe(visible);
@@ -27,33 +28,39 @@ public class LoginPageTest {
 
     @Test
     void invalidLogin() {
+        LoginPage loginPage = new LoginPage();
+
         loginPage.openPage()
                 .typeEmail("invalid_user@example.com")
                 .typePassword("wrongPassword123")
                 .clickLogin();
 
-        $x("//*[contains(@id, 'tabpanel-login')]/form/div[3]/div")
+        loginPage.getLoginError()
                 .shouldBe(visible)
                 .shouldHave(text("Неправильно указан логин и/или пароль"));
     }
 
     @Test
     void emptyFields() {
+        LoginPage loginPage = new LoginPage();
+
         loginPage.openPage()
                 .clickLogin();
 
-        $x("//*[contains(@id, 'tabpanel-login')]/form/div[3]/div")
+        loginPage.getLoginError()
                 .shouldBe(visible)
                 .shouldHave(text("Введите логин"));
     }
 
     @Test
     void emptyFieldPassword() {
+        LoginPage loginPage = new LoginPage();
+
         loginPage.openPage()
                 .typeEmail("some_email@example.com")
                 .clickLogin();
 
-        $x("//*[contains(@id, 'tabpanel-login')]/form/div[3]/div")
+        loginPage.getLoginError()
                 .shouldBe(visible)
                 .shouldHave(text("Введите пароль"));
     }
