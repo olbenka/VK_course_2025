@@ -12,9 +12,8 @@ public class LoginPage {
 
     private final SelenideElement loginError = $x("//div[contains(@class, 'login_error')]");
 
-    public LoginPage openPage() {
+    public void openPage() {
         open("https://ok.ru/");
-        return this;
     }
 
     public LoginPage typeEmail(String email) {

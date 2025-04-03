@@ -24,8 +24,8 @@ public class LoginPageTest {
 
     @Test
     void fieldsVisibleTest() {
-        loginPage.getEmailField().shouldBe(visible);
-        loginPage.getPasswordField().shouldBe(visible);
+        loginPage.getEmailField().shouldBe(visible.because("Не отображается поле ввода логина"));
+        loginPage.getPasswordField().shouldBe(visible.because("Не отображается поле ввода пароля"));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class LoginPageTest {
                 .clickLogin();
 
         loginPage.getLoginError()
-                .shouldBe(visible)
+                .shouldBe(visible.because("Не отображается предупреждение о некорректных введенных данных"))
                 .shouldHave(text("Неправильно указан логин и/или пароль"));
     }
 
@@ -44,7 +44,7 @@ public class LoginPageTest {
         loginPage.clickLogin();
 
         loginPage.getLoginError()
-                .shouldBe(visible)
+                .shouldBe(visible.because("Не отображается предупреждение о вводе логина"))
                 .shouldHave(text("Введите логин"));
     }
 
@@ -54,7 +54,7 @@ public class LoginPageTest {
                 .clickLogin();
 
         loginPage.getLoginError()
-                .shouldBe(visible)
+                .shouldBe(visible.because("Не отображается предупреждение о вводе пароля"))
                 .shouldHave(text("Введите пароль"));
     }
 }
