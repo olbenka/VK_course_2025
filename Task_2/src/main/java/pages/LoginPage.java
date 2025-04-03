@@ -10,9 +10,10 @@ public class LoginPage {
     private final SelenideElement passwordField = $x("//*[@id=\"field_password\"]");
     private final SelenideElement loginButton =  $x("//*[contains(@id, 'tabpanel-login')]/form//input[@type='submit']");
 
-    public LoginPage openPage() {
+    private final SelenideElement loginError = $x("//div[contains(@class, 'login_error')]");
+
+    public void openPage() {
         open("https://ok.ru/");
-        return this;
     }
 
     public LoginPage typeEmail(String email) {
@@ -28,6 +29,8 @@ public class LoginPage {
     public void clickLogin() {
         loginButton.click();
     }
+
+    public SelenideElement getLoginError() { return loginError;}
 
     public SelenideElement getEmailField() {
         return emailField;
