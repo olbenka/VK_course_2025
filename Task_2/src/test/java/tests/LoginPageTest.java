@@ -2,6 +2,7 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.LoginPage;
 
@@ -9,28 +10,27 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 
 public class LoginPageTest {
-
+    private LoginPage loginPage;
     @BeforeAll
     static void setUp() {
         Configuration.browser = "chrome";
     }
 
+    @BeforeEach
+    void openPage() {
+        loginPage = new LoginPage();
+        loginPage.openPage();
+    }
+
     @Test
     void fieldsVisibleTest() {
-        LoginPage loginPage = new LoginPage();
-
-        loginPage.openPage();
-
         loginPage.getEmailField().shouldBe(visible);
         loginPage.getPasswordField().shouldBe(visible);
     }
 
     @Test
     void invalidLoginTest() {
-        LoginPage loginPage = new LoginPage();
-
-        loginPage.openPage()
-                .typeEmail("invalid_user@example.com")
+        loginPage.typeEmail("invalid_user@example.com")
                 .typePassword("wrongPassword123")
                 .clickLogin();
 
@@ -41,10 +41,7 @@ public class LoginPageTest {
 
     @Test
     void emptyFieldsTest() {
-        LoginPage loginPage = new LoginPage();
-
-        loginPage.openPage()
-                .clickLogin();
+        loginPage.clickLogin();
 
         loginPage.getLoginError()
                 .shouldBe(visible)
@@ -53,10 +50,7 @@ public class LoginPageTest {
 
     @Test
     void emptyFieldPasswordTest() {
-        LoginPage loginPage = new LoginPage();
-
-        loginPage.openPage()
-                .typeEmail("some_email@example.com")
+        loginPage.typeEmail("some_email@example.com")
                 .clickLogin();
 
         loginPage.getLoginError()
