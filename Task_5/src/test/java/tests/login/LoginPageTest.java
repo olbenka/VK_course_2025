@@ -5,9 +5,11 @@ import org.junit.jupiter.api.*;
 import pages.HomePage;
 import pages.LoginPage;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
+import static data.SetUpData.*;
+import static data.UserData.*;
+import static data.ErrorMessagesData.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,24 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class LoginPageTest {
     private LoginPage loginPage;
 
-    private static final String VALID_EMAIL = "technopol32";
-    private static final String VALID_PASSWORD = "technopolisPassword";
-
-    private static final String INVALID_EMAIL = "invalid_user@example.com";
-    private static final String INVALID_PASSWORD = "wrongPassword123";
-
-    private static final String EXPECTED_ERROR_INVALID_LOGIN = "Неправильно указан логин и/или пароль";
-    private static final String EXPECTED_ERROR_EMPTY_LOGIN = "Введите логин";
-    private static final String EXPECTED_ERROR_EMPTY_PASSWORD = "Введите пароль";
-
     @BeforeAll
     static void setUp() {
-        Configuration.browser = "chrome";
+        Configuration.browser = BROWSER;
     }
 
     @BeforeEach
     void openPage() {
-        open("https://ok.ru/");
+        open(LOGIN_URL);
         loginPage = new LoginPage();
     }
 
@@ -96,8 +88,9 @@ public class LoginPageTest {
                     .typePassword(VALID_PASSWORD)
                     .clickLogin();
 
-            new HomePage().getLeftSidebarAvatar()
-                    .shouldBe(visible.because("Не появился аватар на левой панели после авторизации"));
+            HomePage homePage = new HomePage();
+            homePage.assertIsLoaded();
+            homePage.shouldSidebarAvatarBeVisible();
         }
     }
 
